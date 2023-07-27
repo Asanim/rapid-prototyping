@@ -1,4 +1,44 @@
+
+
+
+
+
+
+
+
+
+
+
+
+# setup
+https://apps.ankiweb.net/
+
+download anki connect 
+https://ankiweb.net/shared/info/2055492159
+
+
+
+
+obtain shared decks: https://ankiweb.net/shared/decks/japanese
+
+
+
 This repo contains code of reading and categorizing characters for later use in AnkiDroid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
