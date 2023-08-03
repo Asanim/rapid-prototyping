@@ -49,25 +49,29 @@ def generate_coco_annotations(image_folder, output_folder):
         results = model(image_path)
         
         # Iterate through detections and create COCO annotations
-        for result in results.xyxy[0]:  # results.xyxy[0] returns the detections for the image
-            xmin, ymin, xmax, ymax, conf, class_id = result.tolist()
+        for result in results:  # Iterate through the result object for each image
+            boxes = result.boxes  # Get the bounding boxes from the result
+            for box in boxes:
+                xmin, ymin, xmax, ymax = box.xyxy[0].tolist()  # Get the coordinates of the bounding box
+                conf = box.conf[0].item()  # Get the confidence score
+                class_id = int(box.cls[0].item())  # Get the class ID
+                
+                category_name = model.names[class_id]
+                categories.add(category_name)
+                
+                # Create annotation in COCO format
+                annotation = {
+                    "id": annotation_id,
+                    "image_id": len(coco_data['images']),
+                    "category_id": category_id,
+                    "bbox": [xmin, ymin, xmax - xmin, ymax - ymin],
+                    "area": (xmax - xmin) * (ymax - ymin),
+                    "iscrowd": 0
+                }
 
-            category_name = model.names[int(class_id)]
-            categories.add(category_name)
-            
-            # Create annotation in COCO format
-            annotation = {
-                "id": annotation_id,
-                "image_id": len(coco_data['images']),
-                "category_id": category_id,
-                "bbox": [xmin, ymin, xmax - xmin, ymax - ymin],
-                "area": (xmax - xmin) * (ymax - ymin),
-                "iscrowd": 0
-            }
-
-            # Add to the annotations
-            coco_data['annotations'].append(annotation)
-            annotation_id += 1
+                # Add to the annotations
+                coco_data['annotations'].append(annotation)
+                annotation_id += 1
         
         # Add categories to the COCO structure
         for category_name in categories:
