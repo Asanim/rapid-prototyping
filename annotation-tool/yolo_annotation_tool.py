@@ -10,7 +10,7 @@ image_folder = 'test-data/images'
 output_folder = 'test-data/annotations'
 
 # Load the latest YOLO model
-model = YOLO('yolov5l')  # You can specify the model size here ('yolov5l' for large model)
+model = YOLO('yolo11l.pt')  # You can specify the model size here ('yolov5l' for large model)
 
 # Function to generate COCO annotations
 def generate_coco_annotations(image_folder, output_folder):
